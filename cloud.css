@@ -1,0 +1,11 @@
+.cloud-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px}
+.cloud-bar .cal-name{font-weight:bold}
+.cloud-bar .cal-code{font-family:monospace;letter-spacing:.1em}
+.lobby{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);padding:16px}
+.lobby[hidden]{display:none}
+.lobby-box{background:#fff;color:#222;border-radius:8px;padding:20px;width:100%;max-width:380px}
+.lobby-box h2{margin:0 0 12px;font-size:1.2rem}
+.lobby-box h3{margin:16px 0 6px;font-size:1rem}
+.lobby-box input[type=text]{width:100%;box-sizing:border-box;margin-bottom:6px}
+.lobby-msg{color:#c0392b;min-height:1.4em;margin:8px 0 0}
+.share-check{display:block;margin:6px 0;font-size:.9rem}

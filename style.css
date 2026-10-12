@@ -1,0 +1,184 @@
+#controls {
+  max-width: 900px;
+  margin: 20px auto 0 auto;
+  text-align: center;
+  background: #f4f4f4;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+#controls select {
+  margin: 0 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+#calendar-wrapper {
+  max-width: 900px;   
+  margin: 20px auto 40px auto;
+}
+
+.button-row {
+  margin-bottom: 12px;
+}
+
+#deleteSelectedBtn {
+  margin-left: 0;
+  margin-top: 10px;
+}
+
+.weather-event {
+  background-color: #e0f2fe !important; /* 薄い水色 */
+  border-color: #44bafa !important;     /* 枠線 */
+}
+
+.weather-placeholder {
+    visibility: hidden;      /* 見えないが高さは残る */
+    pointer-events: none;
+}
+   
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 画面を暗くする半透明の黒 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;         /* カレンダーより手前に表示 */
+  opacity: 0;            /* 最初は透明 */
+  pointer-events: none;  /* 最初はクリックをスルーさせる */
+  transition: opacity 0.3s ease; /* ふわっと表示させるアニメーション */
+}
+
+/* 💡 JavaScriptで「is-active」がついたら画面に表示する */
+.modal-overlay.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 2. 中央に浮かび上がる白い四角い箱（コンテンツエリア） */
+.modal-content {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 500px;      /* スマホでもパソコンでも見やすい横幅 */
+  padding: 24px;
+  border-radius: 12px;   /* 角を丸くして今風のデザインに */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* 綺麗な影をつけて立体感を出す */
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+/* モーダルが表示されたら箱を少し上に持ち上げるアニメーション */
+.modal-overlay.is-active .modal-content {
+  transform: translateY(0);
+}
+
+/* 3. 各エリア（ヘッダー・ボディ・フッター）の配置調整 */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.modal-header h2 {
+  font-size: 1.25rem;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* 閉じる（×）ボタン */
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #94a3b8;
+  cursor: pointer;
+  line-height: 1;
+}
+.close-btn:hover {
+  color: #64748b; /* マウスを乗せたら少し暗くする */
+}
+
+/* 予定一覧エリア */
+.modal-body {
+  margin-bottom: 24px;
+}
+
+.modal-body h3, .modal-footer h3 {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+/* 予定が並ぶ箇条書きリスト */
+#modalEventList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 150px;
+  overflow-y: auto; /* 予定が増えすぎたらスクロールできるようにする */
+}
+
+#modalEventList li {
+  padding: 10px 12px;
+  background-color: #f8fafc;
+  border-left: 4px solid #3b82f6; /* 左側に青いアクセント線を引く */
+  border-radius: 4px;
+  margin-bottom: 8px;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+/* 新しい予定を入力するエリア */
+.input-group {
+  display: flex;
+  gap: 8px;
+}
+
+#newTodoInput {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+}
+#newTodoInput:focus {
+  border-color: #3b82f6; /* 入力中（フォーカス時）は青枠にする */
+}
+
+/* 「追加」ボタン */
+#saveTodoBtn {
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+  padding: 0 16px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+#saveTodoBtn:hover {
+  background-color: #2563eb; /* マウスを乗せたら少し濃い青にする */
+}
+
+.schedule-event.is-selected {
+  /* 予定自身の色の薄い背景 + 濃い枠 + 同じ色の光 */
+  border: 3px solid var(--sel-color, #ef4444) !important;
+  background-color: color-mix(in srgb, var(--sel-color, #ef4444) 18%, white) !important;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--sel-color, #ef4444) 55%, transparent) !important;
+}
+
+/* 選択された予定の文字は、予定の色を少し暗くして読みやすくする */
+.schedule-event.is-selected .fc-event-main,
+.schedule-event.is-selected .fc-event-title {
+  color: color-mix(in srgb, var(--sel-color, #ef4444) 70%, black) !important;
+  font-weight: bold;
+}
