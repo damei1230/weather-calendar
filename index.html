@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>天気連動カレンダー</title>
+
+  <script src="./fullcalendar.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.4"></script>
+  <script src="./config.js"></script>
+  <script src="./weather.js"></script>
+  <script src="./schedule.js"></script>
+  <link href="./skeleton.css" rel="stylesheet">
+  <link href="./style.css" rel="stylesheet">
+  <link href="./monarch/blue (5).css" rel="stylesheet">
+  <link href="./monarch/theme (7).css" rel="stylesheet">
+  <link href="./cloud.css" rel="stylesheet">
+  <script src="./monarch/global.js"></script>
+</head>
+<body>
+
+  <!-- 共有カレンダーの操作バー -->
+  <div class="cloud-bar">
+    <span class="cal-name" id="calName"></span>
+    <span>招待コード: <span class="cal-code" id="calCode"></span></span>
+    <button id="shareBtn">📤 共有</button>
+    <button id="lineBtn">LINEで送る</button>
+    <button id="switchBtn">切り替え・新規作成</button>
+    <button id="listBtn">📚 カレンダーリスト</button>
+  </div>
+
+  <div class="cal-popup" id="calPopup" hidden>
+    <div class="cal-popup-box">
+      <div class="cal-popup-head">
+        <h2>カレンダーリスト</h2>
+        <button id="calPopupSelect">選択</button>
+        <button id="calPopupClose" class="close-btn">&times;</button>
+      </div>
+      <div id="calendarList"></div>
+      <div id="calSelectBar" hidden>
+        <button id="calSelectDelete" disabled>0件を外す</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="controls">
+    <label for="pref-select">都道府県：</label>
+    <select id="pref-select"></select>
+
+    <label for="area-select">地域（市など）：</label>
+    <select id="area-select"></select>
+  </div>
+
+  <div id="calendar-wrapper">
+    <div class="button-row">
+      <button id="deleteSelectedBtn">🗑️ 選択した予定を削除</button>
+      <button id="cancelSelectBtn" hidden>キャンセル</button>
+    </div>
+    <div class="cal-layout">
+      <div id="calendar"></div>
+      <div id="legend"></div>
+    </div>
+  </div>
+
+  <!-- 予定の詳細＆入力モーダル -->
+  <div id="scheduleModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalDateTitle">2026-10-06 の詳細</h2>
+        <button id="closeModalBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h3>予定一覧</h3>
+        <ul id="modalEventList"></ul>
+      </div>
+      <div class="modal-footer">
+        <h3>新しい予定を追加</h3>
+        <div class="input-group">
+          <input type="text" id="newTodoInput" placeholder="予定のタイトルを入力">
+          <button id="saveTodoBtn">追加</button>
+        </div>
+        <label class="share-check">
+          <input type="checkbox" id="newTodoShared"> 🤝 みんなで編集できる予定にする
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- カレンダーの作成・参加 -->
+  <div class="lobby" id="lobby" hidden>
+    <div class="lobby-box">
+      <h2>共有カレンダー</h2>
+      <label>あなたの名前
+        <input id="memberName" type="text" maxlength="12" placeholder="例: たろう">
+      </label>
+      <h3>招待コードで参加</h3>
+      <input type="text" id="joinCode" placeholder="招待コード(6文字)" maxlength="12" autocomplete="off">
+      <button id="joinBtn">参加する</button>
+      <h3>新しく作る</h3>
+      <input type="text" id="newCalName" placeholder="カレンダーの名前" maxlength="40">
+      <button id="createBtn">作成してコードを発行</button>
+      <p class="lobby-msg" id="lobbyMsg"></p>
+      <button id="lobbyCloseBtn" hidden>閉じる</button>
+    </div>
+  </div>
+
+</body>
+</html>

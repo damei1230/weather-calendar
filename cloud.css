@@ -1,0 +1,95 @@
+.cloud-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px}
+.cloud-bar .cal-name{font-weight:bold}
+.cloud-bar .cal-code{font-family:monospace;letter-spacing:.1em}
+.lobby{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);padding:16px}
+.lobby[hidden]{display:none}
+.lobby-box{background:#fff;color:#222;border-radius:8px;padding:20px;width:100%;max-width:380px}
+.lobby-box h2{margin:0 0 12px;font-size:1.2rem}
+.lobby-box h3{margin:16px 0 6px;font-size:1rem}
+.lobby-box input[type=text]{width:100%;box-sizing:border-box;margin-bottom:6px}
+.lobby-msg{color:#c0392b;min-height:1.4em;margin:8px 0 0}
+.share-check{display:block;margin:6px 0;font-size:.9rem}
+
+/* パネルの高さに余裕を持たせる */
+.cal-popup-box {
+    min-height: min(420px, calc(100vh - 72px));
+}
+
+#calendarList {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 0 12px;
+}
+
+.list-title {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 14px 16px 6px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+}
+.list-empty { padding: 8px 16px; color: #999; font-size: 14px; }
+
+/* 1行ぶん:幅いっぱい、ボタンの見た目なし */
+.cal-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-bottom: 1px solid #eee;
+}
+.cal-item:hover { background: #f5f7fa; }
+.cal-item.active { background: #eaf1ff; }
+
+/* テーマのボタン装飾を打ち消す(#calendarList で優先度を上げている) */
+#calendarList .cal-item button {
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
+    height: auto;
+    line-height: 1.4;
+    text-transform: none;
+    letter-spacing: normal;
+    cursor: pointer;
+}
+
+/* 名前の部分:行の幅をほぼ使い切る */
+#calendarList .cal-item button:first-child {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: normal;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.cal-item.active button:first-child { font-weight: bold; }
+
+/* 「外す」は目立たない小さな文字に */
+#calendarList .cal-item button:last-child {
+    flex: none;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #999;
+}
+#calendarList .cal-item button:last-child:hover { color: #e5484d; }
+
+/* 選択モードの ○ / ● */
+#calendarList .cal-item button.sel-mark { font-size: 20px; color: #bbb; }
+.cal-item.is-selected { background: #eaf1ff; }
+.cal-item.is-selected button.sel-mark { color: #3273dc; }
+
+/* 下部の「N件を外す」バー */
+#calSelectBar { padding: 10px 16px; border-top: 1px solid #ddd; background: #fff; }
+#calSelectBar[hidden] { display: none; }
+#calSelectDelete {
+    width: 100%; padding: 10px; border: 0; border-radius: 8px;
+    background: #e5484d; color: #fff; font-size: 15px; cursor: pointer;
+}
+#calSelectDelete:disabled { background: #ccc; cursor: default; }
